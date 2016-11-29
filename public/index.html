@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+<link>
+    <meta charset="UTF-8">
+    <title>Notes Application</title>
+    <script src="angular.min.js"></script>
+    <script src="hello.js"></script>
+    <script src="notes.js"></script>
+    <link href="bootstrap.css" rel="stylesheet"/>
+</head>
+<body>
+    <tbody>
+        <!--<div ng-controller="HelloController">-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-6">-->
+                <!--<div class="input-group">-->
+                    <!--<span class="input-group-btn">-->
+                        <!--<button ng-click="update()" class="btn btn-default" type="button">Update</button>-->
+                    <!--</span>-->
+                    <!--<input class="form-control" ng-model="name"/>-->
+                <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-6">-->
+                <!--<div>-->
+                    <!--<p>{{greetings}}</p>-->
+                <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="center-block" ng-controller="NotesController">
+            <div class="row center-block">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                    <span class="input-group-btn">
+                        <button ng-click="add()" class="btn btn-default" type="button">Add note</button><br>
+                    </span>
+                    <input class="form-control" ng-model="text"/>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row center-block">
+                <div class="col-lg-6">
+                    <div ng-repeat="note in notes">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <p class="note">{{note.text}}</p>
+                            </div>
+                            <div class="panel-body">
+                                <button ng-click="remove(note.id)">Remove note</button>
+                                <button ng-click="sendOnTop(note.id)">Send on top</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tbody>
+    </table>
+</body>
+</html>
