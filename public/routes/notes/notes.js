@@ -2,14 +2,18 @@
  * Created by dsk8 on 11/28/2016.
  */
 angular.module("myapp")
-    .controller("NotesController", function($scope, $http){
+    .controller("NotesController", function($scope, $http, $routeParams, $location){
     $scope.notes = [];
+    $scope.activeSection = $routeParams.section;
     var update = function() {
         var params = {params:{section:$scope.activeSection}};
         $http.get("/notes", params)
-            .success(function(notes) {
-                console.log(JSON.stringify(notes));
-                $scope.notes = notes;
+            .then(function successCallback(response) {
+                $scope.notes = response.data;
+                console.log(JSON.stringify($scope.notes));
+            },
+            function errorCallback(error) {
+                console.log(error);
             });
     };
     update();
@@ -27,6 +31,7 @@ angular.module("myapp")
 
     $scope.showSection = function(section) {
         $scope.activeSection = section.title;
+        $location.path(section.title);
         update();
     };
 

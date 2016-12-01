@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{section}}</h3>
+        </div>
+        <ul class="list-group" ng-repeat="note in notes">
+            <li class="list-group-item">{{note.text}}</li>
+        </ul>
+    </div>
+</body>
+</html>

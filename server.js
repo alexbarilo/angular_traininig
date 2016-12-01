@@ -122,7 +122,7 @@ app.get("/sections", function(req, res) {
     });
 });
 
-app.post("/sections/replace", function(req, res) {
+app.post("/sections/replace", function(req, resp) {
     if (req.body.lenght == 0) {
         res.end();
     }
@@ -134,7 +134,7 @@ app.post("/sections/replace", function(req, res) {
             if (err) {
                 console.log("err after insert",err);
             }
-            res.end();
+            resp.end();
         });
     });
 })
