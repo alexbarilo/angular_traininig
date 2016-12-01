@@ -9,16 +9,18 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
+var ObjectId = require('mongodb').ObjectId;
 var db = new Db('tutor', new Server("localhost", 27017, {safe: true}, {auto_reconnect: true}, {}));
 
-    db.open(function() {
-        db.collection('notes', function(error, notes) {
-            db.notes = notes;
-        });
-        console.log("Connection is opened");
+db.open(function() {
+    db.collection('notes', function(error, notes) {
+        db.notes = notes;
+   });
+    db.collection('sections', function(error, sections) {
+        db.sections = sections;
     });
-
-
+    console.log("Connection is opened");
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -72,26 +74,67 @@ app.get("/greeting", function(req, res){
 // });
 
 app.get("/notes", function(req, res) {
+    console.log("/notes" + req.query);
     db.notes.find(req.query).toArray(function(err, items) {
         res.send(items);
     })
 })
+
+app.get("/findMinNote", function(req, res) {
+    db.notes.find().sort({order : -1}).limit(1).toArray(function(err, dbResult) {
+        res.send(dbResult.length == null ? null : dbResult[0]);
+    })
+});
 
 app.post("/notes", function(req, res) {
     db.notes.insert(req.body);
     res.end();
 });
 
-app.delete("/notes", function(req,res) {
-    var id = req.query.id;
-    var notes = req.session.notes||[];
-    var updatedNotesList = [];
-    for (var i=0;i<notes.length;i++) {
-        if (notes[i].id != id) {
-            updatedNotesList.push(notes[i]);
+// app.delete("/notes", function(req,res) {
+//     var id = req.query.id;
+//     var notes = req.session.notes||[];
+//     var updatedNotesList = [];
+//     for (var i=0;i<notes.length;i++) {
+//         if (notes[i].id != id) {
+//             updatedNotesList.push(notes[i]);
+//         }
+//     }
+//     req.session.notes = updatedNotesList;
+//     res.end();
+// });
+
+app.delete("/notes", function(req, res) {
+    var id = ObjectId(req.query.id);
+    db.notes.remove({_id: id}, function(err) {
+        if (err) {
+            console.log(err);
+            res.send("Failed");
+        } else {
+            res.send("Success");
         }
-    }
-    req.session.notes = updatedNotesList;
-    res.end();
+    });
 });
 
+app.get("/sections", function(req, res) {
+    db.sections.find(req.query).toArray(function(err, result){
+        res.send(result);
+    });
+});
+
+app.post("/sections/replace", function(req, res) {
+    if (req.body.lenght == 0) {
+        res.end();
+    }
+    db.sections.remove({}, function(err, res) {
+        if (err) {
+            console.log(err);
+        }
+        db.sections.insert(req.body, function(err, res) {
+            if (err) {
+                console.log("err after insert",err);
+            }
+            res.end();
+        });
+    });
+})

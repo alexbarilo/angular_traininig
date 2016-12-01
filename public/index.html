@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myapp">
+<html lang="en" ng-app="myapp" xmlns: xmlns: xmlns: xmlns: xmlns: xmlns: xmlns: xmlns:>
 <link>
     <meta charset="UTF-8">
     <title>Notes Application</title>
@@ -29,12 +29,13 @@
                 <!--</div>-->
             <!--</div>-->
         <!--</div>-->
-        <div class="center-block" ng-controller="NotesController">
+        <div class="row"><br></div>
+        <div ng-controller="NotesController">
             <div class="row center-block">
-                <div class="col-lg-6">
+                <div class="col-md-4 col-md-offset-4">
                     <div class="input-group">
                     <span class="input-group-btn">
-                        <button ng-click="add()" class="btn btn-default" type="button">Add note</button><br>
+                        <button ng-click="addNote()" class="btn btn-success" type="button">Add note</button><br>
                     </span>
                     <input class="form-control" ng-model="text"/>
                     </div>
@@ -42,18 +43,45 @@
             </div>
             <br>
             <div class="row center-block">
-                <div class="col-lg-6">
+                <div class="col-md-4 col-md-offset-4">
                     <div ng-repeat="note in notes">
                         <div class="panel panel-success">
-                            <div class="panel-heading">
+                            <div class="panel-body">
                                 <p class="note">{{note.text}}</p>
                             </div>
-                            <div class="panel-body">
-                                <button ng-click="remove(note.id)">Remove note</button>
-                                <button ng-click="sendOnTop(note.id)">Send on top</button>
+                            <div class="panel-footer">
+                                <div class="col-md-5">
+                                    <button class="btn btn-success btn-xs" ng-click="remove(note._id)">Remove note</button>
+                                    <button class="btn btn-success btn-xs" ng-click="sendOnTop(note.id)">Send on top</button>
+                                </div>
+                                <div class="col-md-offset-9">
+                                    {{note.date | date : 'HH:mm dd.MM.yyyy'}}
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="input-group" style="padding-bottom:20px">
+                        <input type="text" class="form-control" placeholder="New section name" ng-model="newSection">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="addSection()">Add</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <ul class="list-group">
+                        <li href="#" class="list-group-item"
+                            ng-repeat="section in sections"
+                            ng-click="showSection(section)"
+                            ng-class="{active: section.title == activeSection}">
+                            {{section.title}}
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
