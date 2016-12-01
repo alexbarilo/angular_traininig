@@ -10,7 +10,6 @@ angular.module("myapp")
         $http.get("/notes", params)
             .then(function successCallback(response) {
                 $scope.notes = response.data;
-                console.log(JSON.stringify($scope.notes));
             },
             function errorCallback(error) {
                 console.log(error);

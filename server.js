@@ -19,6 +19,9 @@ db.open(function() {
     db.collection('sections', function(error, sections) {
         db.sections = sections;
     });
+    db.collection('users', function(error, users) {
+        db.users = users;
+    });
     console.log("Connection is opened");
 });
 
@@ -74,7 +77,6 @@ app.get("/greeting", function(req, res){
 // });
 
 app.get("/notes", function(req, res) {
-    console.log("/notes" + req.query);
     db.notes.find(req.query).toArray(function(err, items) {
         res.send(items);
     })
@@ -108,7 +110,6 @@ app.delete("/notes", function(req, res) {
     var id = ObjectId(req.query.id);
     db.notes.remove({_id: id}, function(err) {
         if (err) {
-            console.log(err);
             res.send("Failed");
         } else {
             res.send("Success");
@@ -137,4 +138,18 @@ app.post("/sections/replace", function(req, resp) {
             resp.end();
         });
     });
-})
+});
+
+app.post("/users", function(req, response) {
+    db.users.insert(req.body, function(resp) {
+        req.session.uesrName = req.body.userName;
+        response.end();
+    });
+});
+
+app.get("/checkUser", function(res, resp) {
+    db.users.find({userName:res.query.user}).toArray(function(err, result) {
+        console.log("unique user is " + result)
+        resp.send(result);
+    });
+});
