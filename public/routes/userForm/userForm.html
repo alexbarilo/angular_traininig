@@ -1,0 +1,29 @@
+<div class="row center-block">
+    <div class="panel panel-default col-md-4 col-md-offset-4">
+        <div class="panel-heading">
+            User registration form
+        </div>
+        <div class="panel-body">
+        <form class="css-form" name="userForm" novalidate>
+            <div class="form-group">
+                <label for="userName">User name</label>
+                <input ng-model="user.userName" type="text" class="form-control" id="userName" name="userName" placeholder="Username"/>
+                <input ng-model="user.password" type="password" class="form-control" id="password" name="password" placeholder="Password"/>
+                <div>
+                    <input ng-model="user.password2" match-to="user.password" type="password" class="form-control" id="password2" name="password2" placeholder="RepeatPassword"/>
+                    <span ng-show="userForm.password2.$touched && userForm.password2.$error.matchTo">Passwords should match</span>
+                </div>
+                <input ng-model="user.birthDate" type="text" ng-pattern="/^[0-9][0-9]\.[0-1][0-9]\.[1-2][0-9][0-9][0-9]$/" class="form-control" id="birthDate" name="birthDate" placeholder="BirthDate"/>
+                <span ng-show="userForm.birthDate.$error.pattern">Date of birth should be in format dd.mm.yyyy</span>
+                <input ng-show="user.subscribe" ng-model="user.email" type="email" class="form-control" id="email" name="email" placeholder="Email"/>
+                <div class="checkbox">
+                    <label><input type="checkbox" ng-model="user.subscribe">
+                        Subscribe for newsletters
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

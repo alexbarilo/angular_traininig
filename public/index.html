@@ -7,6 +7,7 @@
     <script src="angular-route.js"></script>
     <script src="routes/route.js"></script>
     <script src="routes/notes/notes.js"></script>
+    <script src="routes/userForm/userForm.js"></script>
     <link href="bootstrap.css" rel="stylesheet"/>
     <base href="/"/>
 </head>
@@ -14,6 +15,11 @@
     <tbody>
         <div class="row"><br></div>
         <div ng-controller="NotesController">
+            <div class="row">
+                <div class="col-md-offset-11">
+                    <a class="btn btn-primary" ng-href="/register">Register</a>
+                </div>
+            </div>
             <div class="row">
                 <div class="panel-heading col-md-4 col-md-offset-4">
                     <h3 class="panel-title">
