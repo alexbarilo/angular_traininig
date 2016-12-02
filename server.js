@@ -77,6 +77,7 @@ app.get("/greeting", function(req, res){
 // });
 
 app.get("/notes", function(req, res) {
+    setUserQuery(req);
     db.notes.find(req.query).toArray(function(err, items) {
         res.send(items);
     })
@@ -118,26 +119,32 @@ app.delete("/notes", function(req, res) {
 });
 
 app.get("/sections", function(req, res) {
-    db.sections.find(req.query).toArray(function(err, result){
-        res.send(result);
+    var userName = req.session.userName || "demo";
+    db.sections.find({userName:userName}).toArray(function(err, result){
+        var user = result[0];
+        res.send(user.sections);
     });
 });
 
 app.post("/sections/replace", function(req, resp) {
-    if (req.body.lenght == 0) {
-        res.end();
-    }
-    db.sections.remove({}, function(err, res) {
-        if (err) {
-            console.log(err);
-        }
-        db.sections.insert(req.body, function(err, res) {
-            if (err) {
-                console.log("err after insert",err);
-            }
-            resp.end();
-        });
+    var userName = req.session.userName || "demo";
+    db.users.update({userName:userName}, {$set:{sections:req.body}}, function() {
+        resp.end();
     });
+    //if (req.body.lenght == 0) {
+    //    res.end();
+    //}
+    //db.sections.remove({}, function(err, res) {
+    //    if (err) {
+    //        console.log(err);
+    //    }
+    //    db.sections.insert(req.body, function(err, res) {
+    //        if (err) {
+    //            console.log("err after insert",err);
+    //        }
+    //        resp.end();
+    //    });
+    //});
 });
 
 app.post("/users", function(req, response) {
@@ -153,3 +160,16 @@ app.get("/checkUser", function(res, resp) {
         resp.send(result);
     });
 });
+
+app.post("/login", function(req,res) {
+    db.users.find({userName:req.body.login, password:req.body.password}).toArray(function(err, items) {
+            if (items.length > 0) {
+                req.session.userName = req.body.login;
+            }
+            res.send(items.length > 0);
+        });
+});
+
+function setUserQuery(req) {
+    req.query.userName = req.session.userName || "demo";
+}

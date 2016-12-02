@@ -1,0 +1,45 @@
+<div>
+<!--<div ng-controller="NotesController">-->
+    <div class="row">
+        <div class="panel-heading col-md-4 col-md-offset-4">
+            <h3 class="panel-title">
+                Add your note to
+                <a ng-href="#/section/{{activeSection}}">{{activeSection}}</a>
+            </h3>
+        </div>
+    </div>
+    <div class="row center-block">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button ng-click="addNote()" class="btn btn-primary" type="button">Add note</button><br>
+                </span>
+                <input class="form-control" ng-model="text"/>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="input-group" style="padding-bottom:20px">
+                <input type="text" class="form-control" placeholder="New section name" ng-model="newSection">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="addSection()">Add</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <ul class="list-group">
+                <li href="#" class="list-group-item"
+                    ng-repeat="section in sections"
+                    ng-click="showSection(section)"
+                    ng -class="{active: section.title == activeSection}">
+                    {{section.title}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ng-include="'notes.html'"></div>
+</div>

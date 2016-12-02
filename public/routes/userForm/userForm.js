@@ -18,9 +18,7 @@ angular.module("myapp")
             }
         };
     })
-    //.directive("uniqueUser", function($http, $timeout) {
     .directive("uniqueUser", function($http, $q) {
-        //var timer;
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -41,11 +39,23 @@ angular.module("myapp")
     })
     .controller("UserFormController", function($scope, $http, $location) {
         $scope.user = {};
+        $scope.loggedUser = {};
         $scope.submitForm = function() {
             $http.post("/users", $scope.user)
                 .success(function(data){
                     console.log("User has been saved");
                     $location.path("/");
+                });
+        }
+        $scope.login = function() {
+            $http.post("/login", $scope.loggedUser)
+                .then(function(response) {
+                    if (response.data) {
+                        $location.path("/");
+                    } else {
+                        alert("Login / password is incorrect");
+                        $scope.loggedUser = null;
+                    }
                 });
         }
     });

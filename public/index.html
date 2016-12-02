@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myapp">
-<link>
+<head>
     <meta charset="UTF-8">
     <title>Notes Application</title>
     <script src="angular.js"></script>
@@ -8,64 +8,74 @@
     <script src="routes/route.js"></script>
     <script src="routes/notes/notes.js"></script>
     <script src="routes/userForm/userForm.js"></script>
+    <script src="routes/login/loginController.js"></script>
+    <script src="routes/login/userService.js"></script>
     <link href="bootstrap.css" rel="stylesheet"/>
     <base href="/"/>
 </head>
 <body>
-    <tbody>
-        <div class="row"><br></div>
-        <div ng-controller="NotesController">
-            <div class="row">
-                <div class="col-md-offset-11">
-                    <a class="btn btn-primary" ng-href="/register">Register</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="panel-heading col-md-4 col-md-offset-4">
-                    <h3 class="panel-title">
-                        Add your note to
-                        <a ng-href="#/section/{{activeSection}}">
-                            {{activeSection}}
-                        </a>
-                    </h3>
-                </div>
-            </div>
-            <div class="row center-block">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="input-group">
-                    <span class="input-group-btn">
-                        <button ng-click="addNote()" class="btn btn-primary" type="button">Add note</button><br>
-                    </span>
-                    <input class="form-control" ng-model="text"/>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div ng-view></div>
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="input-group" style="padding-bottom:20px">
-                        <input type="text" class="form-control" placeholder="New section name" ng-model="newSection">
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" ng-click="addSection()">Add</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <ul class="list-group">
-                        <li href="#" class="list-group-item"
-                            ng-repeat="section in sections"
-                            ng-click="showSection(section)"
-                            ng-class="{active: section.title == activeSection}">
-                            {{section.title}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div class="row"><br></div>
+    <div class="row">
+        <div class="col-md-offset-10">
+            <a class="btn btn-primary" ng-href="/register">Register</a>
+            <a class="btn btn-primary" ng-href="/login">Log in</a>
         </div>
-    </tbody>
-    </table>
+    </div>
+    <div class="row" ng-view></div>
+    <!--<tbody>-->
+        <!--<div class="row"><br></div>-->
+
+        <!--<div ng-controller="NotesController">-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-offset-11">-->
+                    <!--<a class="btn btn-primary" ng-href="/register">Register</a>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="panel-heading col-md-4 col-md-offset-4">-->
+                    <!--<h3 class="panel-title">-->
+                        <!--Add your note to-->
+                        <!--<a ng-href="#/section/{{activeSection}}">-->
+                            <!--{{activeSection}}-->
+                        <!--</a>-->
+                    <!--</h3>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row center-block">-->
+                <!--<div class="col-md-4 col-md-offset-4">-->
+                    <!--<div class="input-group">-->
+                    <!--<span class="input-group-btn">-->
+                        <!--<button ng-click="addNote()" class="btn btn-primary" type="button">Add note</button><br>-->
+                    <!--</span>-->
+                    <!--<input class="form-control" ng-model="text"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<br>-->
+            <!--<div ng-view></div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-4 col-md-offset-4">-->
+                    <!--<div class="input-group" style="padding-bottom:20px">-->
+                        <!--<input type="text" class="form-control" placeholder="New section name" ng-model="newSection">-->
+                        <!--<span class="input-group-btn">-->
+                            <!--<button class="btn btn-primary" ng-click="addSection()">Add</button>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-4 col-md-offset-4">-->
+                    <!--<ul class="list-group">-->
+                        <!--<li href="#" class="list-group-item"-->
+                            <!--ng-repeat="section in sections"-->
+                            <!--ng-click="showSection(section)"-->
+                            <!--ng-class="{active: section.title == activeSection}">-->
+                            <!--{{section.title}}-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</tbody>-->
 </body>
 </html>
